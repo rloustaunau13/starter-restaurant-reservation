@@ -32,7 +32,7 @@ function SeatReservationPage() {
         // Handle error (e.g., redirect back to dashboard)
         console.error('Error fetching reservation data:', error);
         setReservationsError(error);
-        // history.push('/dashboard');
+       
       });
   }, []);
 
@@ -45,11 +45,11 @@ function SeatReservationPage() {
     // Perform the logic to seat the reservation and update the table status
     seatReservation(reservationId, selectedTable, controller.signal)
       .then(() => {
-        // Redirect back to the dashboard after seating the reservation
+        
         history.push('/dashboard');
       })
       .catch((error) => {
-        // Handle error (e.g., display an error message)
+        
         console.error('Error seating reservation:', error);
         setReservationsError(error);
       });

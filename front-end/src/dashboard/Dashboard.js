@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { listReservations,listTables,finishTable, updateStatus } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
-
+import { useHistory } from 'react-router-dom';
 
 /**
  * Defines the dashboard page.
@@ -19,32 +19,30 @@ function Dashboard({date}) {
   const [tables, setTables] = useState([]);
   const [selectedTable, setSelectedTable] = useState(null);
   const abortController = new AbortController();
-
+  const history = useHistory();
+  
+  async function handleCancel(reservation) {
 
   
-  async function handleCancel(reservation){
-    // Add your logic to handle cancel button click
-    // For example, you can use React Router's useHistory to go back to the previous page.
-    // Import useHistory from 'react-router-dom'.
-    // const history = useHistory();
-    // history.goBack();
-
-
-    const result = window.confirm("Do you want to cancel this reservation?");
-
-
-     // Check the result
-     if (result) {
-      // User clicked OK
-      reservation.people=Number(reservation.people);
-      reservation.status='finished';
-      await updateStatus(reservation, abortController.signal);
-     
-
-      loadDashboard();
-      // Add your logic for OK button action here
-    } 
-  };
+    try {
+      const result = window.confirm("Do you want to cancel this reservation?");
+  
+      if (result) {
+        // User clicked OK
+        reservation.people = Number(reservation.people);
+        reservation.status = 'finished';
+  
+        // Update reservation status
+        await updateStatus(reservation, abortController.signal);
+  
+        // Navigate back to the previous page
+        history.goBack();
+      }
+    } catch (error) {
+     setReservationsError(error);
+      console.error("Error handling cancellation:", error);
+    }
+  }
 
 
 
@@ -61,7 +59,7 @@ function Dashboard({date}) {
 
     const result = window.confirm("Is this table ready to seat new guests?");
 
-
+    try {
      // Check the result
      if (result) {
       // User clicked OK
@@ -71,9 +69,15 @@ function Dashboard({date}) {
 
       loadDashboard();
       loadTables();
-      // Add your logic for OK button action here
-    } 
-  };
+      
+     }
+    } catch (error) {
+     tablesError(error);
+      console.error("Error handling cancellation:", error);
+    }
+  }
+   
+
 
 
 

@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ErrorAlert from '../layout/ErrorAlert'; 
 import { postReservation, putReservation } from '../utils/api'; 
-import formatReservationDate from "../utils/format-reservation-date";
+
 import { formatAsDate } from "../utils/date-time";
 const FormReservation = ({ reservation, onSubmit, onCancel }) => {
+    const [reservations, setReservation] = useState(null);
   const history = useHistory();
   const controller = new AbortController();
   const [reservationsError, setReservationsError] = useState(null);

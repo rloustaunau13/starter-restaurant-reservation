@@ -4,14 +4,14 @@ import FormReservation, { Form } from './Form';
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from 'react-router-dom';
 import {  putReservation,readReservation } from '../utils/api';
-
+import ErrorAlert from "../layout/ErrorAlert";
 
 export const EditReservationForm= () => {
    
     const history = useHistory();
     const [reservations, setReservation] = useState(null);
     const { reservationId } = useParams();
-   
+    const [reservationsError, setReservationsError] = useState(null);
 
     
     useEffect(() => {
@@ -27,9 +27,8 @@ export const EditReservationForm= () => {
           
           } catch (error) {
             console.error('Error fetching reservation:', error);
-           // setReservationsError(error);
-            // Handle error, e.g., redirect to dashboard
-            // history.push('/dashboard');
+            setReservationsError(error);
+     
           }
         };
     
@@ -48,6 +47,7 @@ export const EditReservationForm= () => {
 
     return (
         <>
+         <ErrorAlert error={reservationsError} />
         {reservations!=null && (
             
           <FormReservation
