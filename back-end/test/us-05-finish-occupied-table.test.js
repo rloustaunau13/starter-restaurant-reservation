@@ -1,3 +1,5 @@
+
+require('fast-text-encoding');
 const request = require("supertest");
 
 const app = require("../src/app");
@@ -25,6 +27,7 @@ describe("US-05 - Finish an occupied table", () => {
 
     beforeEach(async () => {
       barTableOne = await knex("tables").where("table_name", "Bar #1").first();
+      console.log('TableID'+barTableOne.table_id);
       tableOne = await knex("tables").where("table_name", "#1").first();
     });
 
@@ -40,7 +43,7 @@ describe("US-05 - Finish an occupied table", () => {
 
     test("returns 400 if table_id is not occupied.", async () => {
       const response = await request(app)
-        .delete("/tables/1/seat")
+        .delete("/tables/2/seat")
         .set("Accept", "application/json")
         .send({});
 

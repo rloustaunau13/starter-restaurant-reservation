@@ -1,3 +1,6 @@
+
+
+require('fast-text-encoding');
 const request = require("supertest");
 
 const app = require("../src/app");
@@ -131,7 +134,7 @@ describe("US-06 - Reservation status", () => {
           .put(`/reservations/${reservationOne.reservation_id}/status`)
           .set("Accept", "application/json")
           .send({ data: { status } });
-
+          console.log("INSIDE TEST "+status)
         expect(response.body.data).toHaveProperty("status", status);
         expect(response.status).toBe(200);
       }

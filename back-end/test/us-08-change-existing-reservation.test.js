@@ -1,3 +1,6 @@
+
+
+require('fast-text-encoding');
 const request = require("supertest");
 
 const app = require("../src/app");
@@ -358,6 +361,7 @@ describe("US-08 - Change an existing reservation", () => {
       const reservation = await knex("reservations")
         .orderBy(["reservation_date", "reservation_time"])
         .first();
+        
 
       expect(reservation).not.toBeUndefined();
 

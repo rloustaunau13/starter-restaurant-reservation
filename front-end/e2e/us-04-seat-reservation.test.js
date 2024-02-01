@@ -6,7 +6,7 @@ const fsPromises = fs.promises;
 const { createReservation } = require("./api");
 const { selectOptionByText } = require("./utils");
 
-const baseURL = process.env.BASE_URL || "http://localhost:3000";
+const baseURL = "http://localhost:3000";
 
 const onPageConsole = (msg) =>
   Promise.all(msg.args().map((event) => event.jsonValue())).then((eventJson) =>
@@ -255,9 +255,9 @@ describe("US-04 - Seat reservation - E2E", () => {
       });
 
       const hrefSelector = `[href="/reservations/${reservation.reservation_id}/seat"]`;
-
+      console.log(hrefSelector);
       await page.waitForSelector(hrefSelector);
-
+   
       await page.screenshot({
         path: ".screenshots/us-04-dashboard-seat-button-after.png",
         fullPage: true,
