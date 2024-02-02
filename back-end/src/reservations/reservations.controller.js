@@ -75,17 +75,21 @@ if(!reservation_time){
 
 
   // Get the current date
-  const currentDate = new Date();
 
 // Assuming reservation_date and reservation_time are the reservation date and time
-const reservationDateTime = new Date(`${reservation_date}T${reservation_time}`);
+// Get hours, minutes, and seconds separately
+
+
+
+// Format the time as a string (HH:MM:SS)
+const currentDate = new Date();
+const formattedTime =  new Date(`${reservation_date}T${reservation_time}`);
 
 // Check if the reservation date and time are in the future
 if (
-  currentDate > reservationDateTime &&
-  currentDate.getTime() >= reservationDateTime.getTime()
+  formattedTime<=currentDate
 ) {
-  return next({ status: 400, message: "Reservation must be for a future date and time" });
+  return next({ status: 400, message: "Reservation must be for a future date" });
 }
 
     // Check if the reservation date falls on a Tuesday (day of the week = 1)
