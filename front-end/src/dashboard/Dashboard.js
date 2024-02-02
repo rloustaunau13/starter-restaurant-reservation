@@ -35,8 +35,8 @@ function Dashboard({date}) {
         // Update reservation status
         await updateStatus(reservation, abortController.signal);
   
-        // Navigate back to the previous page
-        history.goBack();
+        // Refresh page
+        history.go();
       }
     } catch (error) {
      setReservationsError(error);
