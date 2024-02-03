@@ -5,8 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { today } from "../utils/date-time";
 import { previous } from "../utils/date-time";
 import { next } from "../utils/date-time";
-import { ArrowRight } from 'react-bootstrap-icons';
-import { ArrowLeft } from 'react-bootstrap-icons';
+
 
 
 /**
