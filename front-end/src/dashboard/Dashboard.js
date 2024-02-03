@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import { listReservations,listTables,finishTable, updateStatus } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory } from 'react-router-dom';
+import { today } from "../utils/date-time";
+import { previous } from "../utils/date-time";
+import { asDateString } from "../utils/date-time";
+import { next } from "../utils/date-time";
+import { ArrowRight } from 'react-bootstrap-icons';
+import { ArrowLeft } from 'react-bootstrap-icons';
+import { Button } from 'react-bootstrap-icons';
 
 /**
  * Defines the dashboard page.
@@ -20,7 +27,32 @@ function Dashboard({date}) {
   const [selectedTable, setSelectedTable] = useState(null);
   const abortController = new AbortController();
   const history = useHistory();
+  const [currentDate, setCurrentDate] = useState(date);
+
+
+
+  const goToPreviousDay = () => {
+
+    
+    const previousDay = previous(currentDate);
+    setCurrentDate(previousDay);
+    history.push(`/dashboard?date=${previousDay}`);
+  };
   
+  const goToNextDay = () => {
+   
+    const nextDay = next(currentDate);
+    setCurrentDate(nextDay);
+    history.push(`/dashboard?date=${nextDay}`);
+  };
+  
+  const goToToday = () => {
+    let day=today();
+    setCurrentDate(day);
+    history.push(`/dashboard?date=${day}`);
+  };
+
+
   async function handleCancel(reservation) {
 
   
@@ -74,7 +106,7 @@ function Dashboard({date}) {
     } catch (error) {
     
       console.error("Error handling cancellation:", error);
-      tablesError(error);
+      setReservationsError(error);
     }
   }
    
@@ -88,7 +120,7 @@ function Dashboard({date}) {
     loadTables();
   
     return () => abortController.abort();
-  }, [date]);
+  }, [currentDate]);
 
   async function loadDashboard() {
    
@@ -127,7 +159,7 @@ function Dashboard({date}) {
 
       setIsLoading(false);
     } catch (error) {
-      setTablesError(error);
+      setReservationsError(error);
       setIsLoading(false);
     }
 
@@ -138,18 +170,24 @@ function Dashboard({date}) {
 
   return (
     <main>
-    <h1>Reservations Dashboard</h1>
-    <div className="d-md-flex mb-3">
-      <h4 className="mb-0">Reservations for {date}</h4>
+    
+        <h2 className="mt-4" align="center">Reservations for {date}</h2>
+      
+    <div>
+    <ArrowLeft onClick={goToPreviousDay} color="royalblue" size={50} />
+      <ArrowRight onClick={goToNextDay} color="royalblue" size={50} />
+      <button type="button" className="btn btn-secondary" onClick={goToToday}>
+          Today
+        </button>
     </div>
     <ErrorAlert error={reservationsError} />
 
     {isLoading ? (
       <p>Loading...</p>
     ) : (
-      <div>
+      <div className="table-responsive">
       <table className="table">
-        <thead>
+      <thead className="thead-dark">
           <tr>
             <th scope="col">Reservation ID</th>
             <th scope="col">First Name</th>
@@ -206,11 +244,19 @@ function Dashboard({date}) {
           ))}
         </tbody>
       </table>
+      <hr
+        style={{
+          background: 'gray',
+          color: 'gray',
+          borderColor: 'gray',
+          height: '10px',
+        }}
+      />
 
-<h2>Available Tables</h2>
-<ErrorAlert error={tablesError} />
+<h2 align="center">Tables</h2>
+<ErrorAlert error={reservationsError} />
           <table className="table" >
-            <thead>
+          <thead className="thead-dark">
               <tr>
                 <th scope="col">Table ID</th>
                 <th scope="col">Capacity</th>

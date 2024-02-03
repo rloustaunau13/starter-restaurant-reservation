@@ -20,9 +20,14 @@ const FormReservation = ({ reservation, onSubmit, onCancel }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+  
+    // Remove hyphens from mobile_number
+    if (name === 'mobile_number') {
+      const sanitizedValue = value.replace(/-/g, '');
+      setFormData((prevData) => ({ ...prevData, [name]: sanitizedValue }));
+    } else {
       setFormData((prevData) => ({ ...prevData, [name]: value }));
-
+    };
   };
 
   const handleSubmit = async (e) => {
@@ -78,7 +83,7 @@ const FormReservation = ({ reservation, onSubmit, onCancel }) => {
           <div className="mb-3">
             <label className="form-label">
               Mobile Number:
-              <input type="text" className="form-control" name="mobile_number" value={formData.mobile_number} onChange={handleChange} required />
+              <input type="number" className="form-control" name="mobile_number" value={formData.mobile_number} onChange={handleChange}/>
             </label>
           </div>
   
