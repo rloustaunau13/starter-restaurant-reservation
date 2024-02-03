@@ -72,8 +72,9 @@ function Dashboard({date}) {
       
      }
     } catch (error) {
-     tablesError(error);
+    
       console.error("Error handling cancellation:", error);
+      tablesError(error);
     }
   }
    
