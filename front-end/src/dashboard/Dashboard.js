@@ -173,9 +173,13 @@ function Dashboard({date}) {
         <h2 className="mt-4" align="center">Reservations for {date}</h2>
       
     <div>
-    <ArrowLeft onClick={goToPreviousDay} color="royalblue" size={50} />
-      <ArrowRight onClick={goToNextDay} color="royalblue" size={50} />
-      <button type="button" className="btn btn-secondary" onClick={goToToday}>
+    <button type="button" className="btn btn-secondary" onClick={goToPreviousDay}>
+      Previous
+    </button>
+    <button type="button" className="btn btn-secondary" onClick={goToNextDay}>
+      Next
+    </button>
+      <button type="button" className="btn btn-primary" onClick={goToToday}>
           Today
         </button>
     </div>
