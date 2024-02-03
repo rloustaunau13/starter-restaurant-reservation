@@ -87,7 +87,7 @@ const formattedTime =  new Date(`${reservation_date}T${reservation_time}`);
 
 // Check if the reservation date and time are in the future
 if (
-  formattedTime<currentDate
+  formattedTime<=currentDate
 ) {
   return next({ status: 400, message: "Reservation must be for a future date" });
 }

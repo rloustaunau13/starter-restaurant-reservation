@@ -33,6 +33,7 @@ const FormReservation = ({ reservation, onSubmit, onCancel }) => {
       formData.people = Number(formData.people);
 
       if (onSubmit === postReservation) {
+  
         await postReservation(formData, controller.signal);
        
       } else if (onSubmit === putReservation) {
