@@ -36,20 +36,30 @@ const FormReservation = ({ reservation, onSubmit, onCancel }) => {
 
     try {
       formData.people = Number(formData.people);
-
+      
       if (onSubmit === postReservation) {
-  
+        
+        let resDATE=new Date(formData.reservation_date).getDay();
+
+        if(resDATE==1){
+          let error = new Error('Tuesday restaurant is closed');
+          setReservationsError(error);
+        }else{
         await postReservation(formData, controller.signal);
-       
+        const date = formData.reservation_date;
+        history.push(`/dashboard?date=${date}`);
+        }
       } else if (onSubmit === putReservation) {
+    
        formData.reservation_id=reservation.reservation_id;
        formData.status="booked";
        formData.people = Number(formData.people);
         await putReservation(formData, controller.signal);
+        const date = formData.reservation_date;
+        history.push(`/dashboard?date=${date}`);
       }
 
-      const date = formData.reservation_date;
-      history.push(`/dashboard?date=${date}`);
+    
     } catch (error) {
       setReservationsError(error);
       console.error('Error processing reservation:', error.message);
