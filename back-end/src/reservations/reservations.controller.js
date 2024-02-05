@@ -86,7 +86,7 @@ const currentDate = new Date();
 const formattedTime =  new Date(`${reservation_date}T${reservation_time}`);
 
 
-console.log(formattedTime<currentDate);
+
 // Check if the reservation date and time are in the future
 if (
   formattedTime<currentDate
@@ -95,8 +95,8 @@ if (
 }
 
     // Check if the reservation date falls on a Tuesday (day of the week = 1)
-  
-    if (new Date(reservation_date).getDay() === 1) {
+
+    if (new Date(reservation_date).getDay() === 2) {
       return next({ status: 400, message: "Tuesdays restaurant is closed" });
     }
 
