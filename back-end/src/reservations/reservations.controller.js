@@ -96,7 +96,7 @@ if (
 
     // Check if the reservation date falls on a Tuesday (day of the week = 1)
 
-    if (new Date(reservation_date).getDay() === 1) {
+    if (new Date(reservation_date).getDay() === 2) {
       return next({ status: 400, message: "Tuesdays restaurant is closed" });
     }
 
