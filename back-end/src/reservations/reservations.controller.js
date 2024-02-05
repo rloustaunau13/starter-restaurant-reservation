@@ -82,21 +82,21 @@ if(!reservation_time){
 
 
 // Format the time as a string (HH:MM:SS)
-const currentDate = new Date();
+
 const formattedTime =  new Date(`${reservation_date}T${reservation_time}`);
 
 
 
 // Check if the reservation date and time are in the future
 if (
-  formattedTime<currentDate
+  formattedTime<Date.now()
 ) {
   return next({ status: 400, message: "Reservation must be for a future date" });
 }
 
     // Check if the reservation date falls on a Tuesday (day of the week = 1)
 
-    if (new Date(reservation_date).getDay() === 2) {
+    if (new Date(reservation_date).getDay() === 1) {
       return next({ status: 400, message: "Tuesdays restaurant is closed" });
     }
 
